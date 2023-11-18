@@ -1,12 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text,TouchableOpacity } from 'react-native';
 import * as Font from 'expo-font';
+import firebase from 'firebase/compat';
+import LoginScreen from '../Screens/LoginScreen';
 
 
 export default function Button () {
 return(
    
-    <TouchableOpacity style={styles.button}>
+    <TouchableOpacity style={styles.button}
+    onPress={() => LoginScreen}
+    >
         <Text style={styles.textButton}>Crear cuenta nueva</Text>
     </TouchableOpacity>
 );

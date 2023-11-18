@@ -1,12 +1,16 @@
-import React from 'react';
-import { StyleSheet, Text,TouchableOpacity } from 'react-native';
 
+import react ,{useState} from 'react';
+import { StyleSheet, Text,TouchableOpacity } from 'react-native';
+import firebase from 'firebase/compat';
+import LoginScreen from '../Screens/LoginScreen';
 
 
  function Button () {
 return(
    
-    <TouchableOpacity style={styles.button}>
+    <TouchableOpacity 
+    onPress={()  => LoginScreen}
+    style={styles.button}>
         <Text style={styles.textButton}>Inicio de sesion</Text>
     </TouchableOpacity>
 );
