@@ -1,75 +1,70 @@
 import React, {useState} from 'react'
 import { View, Button, TextInput, ScrollView, StyleSheet} from "react-native";
+import {firebase} from '../database/firebase'
 
 
-import {getFirestore, collection, addDoc, getDocs, doc, deleteDoc, getDoc, setDoc, collectionGroup} from 'firebase/firestore';
-import initializeApp, {  } from "../database/firebase";
 
-
-const db = getFirestore(initializeApp);
+const db = firebase;
 
 
 const CreateUsersScreen = () => {
 
-    const [state, setState] = useState({ //creamos los campos para guardar la informacion del ususario
-        name: '',
-        email: '',
-        password: '',
-        passwordc: '',
-        phone: ''
+  const [userName,setUserName] = useState('')
+  const [email,setEmail] = useState('')
+  const [password,setPassword] = useState('')
+  const [phone,setPhone] =useState('')
+
+  registerUser = async(userName,email,password,phone) => {
+    await firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then(() =>{
+      firebase.auth().currentUser.sendEmailVerification({
+        handleCodeInApp:true,
+        url:'https://react-native-coneccion.firebaseapp.com',
+      })
+      .then(() =>{
+        alert('Email de verificación enviado')
+      }).catch((error) => {
+        alert(error.message)
+      })
+      .then(() => {
+        firebase.firestore().collection('users')
+        .doc(firebase.auth().currentUser.uid)
+        .set({
+          userName,
+          email,
+          password,
+          phone
+        })
+      })
+      .catch((error) => {
+        alert(error.message)
+      })
     })
+    .catch((error => {
+      alert(error.message)
+    }))
+  }  
 
-    const handleChangeText = (name, value) => { //guardamos la informacion de los ususarios a los campos creados
-        setState({...state, [name]: value})
-    }
-
-
-
-    const saveNewUser = async () => {
-  if (state.name === '') {
-    alert('Por favor, escribe un nombre');
-  } else if(state.password === state.passwordc){
-    try {
-      const nota = {
-        name: state.name,
-        email: state.email,
-        password: state.password,
-        passwordc: state.passwordc,
-        phone: state.phone
-      }
-      await addDoc(collection(db, 'usuarios'), {
-        ...nota
-      });
-      alert('Guardado');
-    } catch (error) {
-      console.error('Error al guardar el usuario:', error);
-      alert('Hubo un error al guardar el usuario');
-    }
-  } else{
-    alert('Las contraseñas no coinciden');
-  }
-};
-
-
+    
     return (
         <ScrollView>
             <View>
-                <TextInput placeholder="Name user" onChangeText={(value) => handleChangeText('name', value)}/>
+                <TextInput placeholder="Name user" onChangeText={(value) => setUserName(value)}/>
             </View>
             <View>
-                <TextInput placeholder="Email user" onChangeText={(value) => handleChangeText('email', value)}/>
+                <TextInput placeholder="Email user" onChangeText={(value) => setEmail(value)}/>
             </View>
             <View>
-                <TextInput placeholder="Password" onChangeText={(value) => handleChangeText('password', value)}/>
+                <TextInput placeholder="Password" onChangeText={(value) => setPassword(value)}/>
             </View>
             <View>
-                <TextInput placeholder="Password confirm" onChangeText={(value) => handleChangeText('passwordc', value)}/>
+                <TextInput placeholder="Password confirm"/>
             </View>
             <View>
-                <TextInput placeholder="Phone user" onChangeText={(value) => handleChangeText('phone', value)}/>
+                <TextInput placeholder="Phone user" onChangeText={(value) => setPhone(value)}/>
             </View>
             <View>
-                <Button title='Añadir ususario' onPress={() => saveNewUser()}/>
+                <Button title='Añadir ususario' onPress={() => registerUser(userName, email, password, phone)}/>
             </View>
         </ScrollView>
     )

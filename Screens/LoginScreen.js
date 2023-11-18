@@ -1,12 +1,13 @@
-import react ,{useState} from 'react';
+import React ,{useState} from 'react';
 import { Text,TextInput,StyleSheet,TouchableOpacity  } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient'
 import { useNavigation } from '@react-navigation/native';
 import {firebase} from '../database/firebase'
 
+
 const LoginScreen = () => {
 
-   const use = useNavigation()
+   const navigation = useNavigation()
 
    const [email,setEmail] = useState('')
    const [password,setPassword] = useState('')
@@ -50,6 +51,11 @@ const LoginScreen = () => {
         <Text style={styles.textButton}>Inicio de sesion</Text>
     </TouchableOpacity>
 
+    <TouchableOpacity 
+    onPress={()  => navigation.navigate('CreateUsersScreen')}
+    style={styles.button}>
+        <Text style={styles.textButton}>Crear cuenta</Text>
+    </TouchableOpacity>
         
         <Text style={styles.recuperarPassword}>¿Olvidaste tu contraseña?</Text>
 
