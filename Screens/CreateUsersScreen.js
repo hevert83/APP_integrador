@@ -1,10 +1,10 @@
 import React, {useState} from 'react'
-import { View, Button, TextInput, ScrollView, StyleSheet} from "react-native";
+import { LinearGradient } from 'expo-linear-gradient'
+import { TextInput,StyleSheet,Image,Text,TouchableOpacity} from "react-native";
 import {firebase} from '../database/firebase'
+import { useFonts } from 'expo-font';
+import vigenereCipher from '../Encrypt/Encyption';
 
-
-
-const db = firebase;
 
 
 const CreateUsersScreen = () => {
@@ -14,60 +14,139 @@ const CreateUsersScreen = () => {
   const [password,setPassword] = useState('')
   const [phone,setPhone] =useState('')
 
-  registerUser = async(userName,email,password,phone) => {
+  
+  
+
+  const [fontsLoaded] = useFonts({
+    Bold: require("../fonts/BoldItalic.ttf")
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
+  registerUser = async(userName, email, password, phone) => {
     await firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then(() =>{
-      firebase.auth().currentUser.sendEmailVerification({
-        handleCodeInApp:true,
-        url:'https://react-native-coneccion.firebaseapp.com',
-      })
-      .then(() =>{
-        alert('Email de verificación enviado')
-      }).catch((error) => {
-        alert(error.message)
-      })
       .then(() => {
-        firebase.firestore().collection('users')
-        .doc(firebase.auth().currentUser.uid)
-        .set({
-          userName,
-          email,
-          password,
-          phone
+        firebase.auth().currentUser.sendEmailVerification({
+          handleCodeInApp:true,
+          url:'https://react-native-coneccion.firebaseapp.com',
+        })
+        .then(() => {
+          alert('Email de verificación enviado')
+        })
+        .catch((error) => {
+          alert(error.message)
+        })
+        .then(() => {
+          const encryptedEmail = vigenereCipher(email);
+          const encryptedPassword = vigenereCipher(password);
+  
+          firebase.firestore().collection('users')
+            .doc(firebase.auth().currentUser.uid)
+            .set({
+              userName,
+              email: encryptedEmail, // Guardar el email cifrado en Firestore
+              password: encryptedPassword, // Guardar la contraseña cifrada en Firestore
+              phone
+            })
+        })
+        .catch((error) => {
+          alert(error.message)
         })
       })
-      .catch((error) => {
+      .catch((error => {
         alert(error.message)
-      })
-    })
-    .catch((error => {
-      alert(error.message)
-    }))
+      }))
   }  
 
     
     return (
-        <ScrollView>
-            <View>
-                <TextInput placeholder="Name user" onChangeText={(value) => setUserName(value)}/>
-            </View>
-            <View>
-                <TextInput placeholder="Email user" onChangeText={(value) => setEmail(value)}/>
-            </View>
-            <View>
-                <TextInput placeholder="Password" onChangeText={(value) => setPassword(value)}/>
-            </View>
-            <View>
-                <TextInput placeholder="Password confirm"/>
-            </View>
-            <View>
-                <TextInput placeholder="Phone user" onChangeText={(value) => setPhone(value)}/>
-            </View>
-            <View>
-                <Button title='Añadir ususario' onPress={() => registerUser(userName, email, password, phone)}/>
-            </View>
-        </ScrollView>
+      <LinearGradient style={styles.container}
+      colors={['#19AF79','#A4C1B7']}
+      start={{x:0.9 , y:0.5}}
+      end={{x:1, y:1}}
+      >
+  
+     <Image source={require('../assets/logo.png')} style={styles.logo}></Image>
+  
+      <Text style={styles.title}>Ingresa tus datos</Text>
+        <TextInput  placeholder='Nombre de Usuario'
+                    style={styles.textInput} onChangeText={(value) => setUserName(value)} />
+        <TextInput  placeholder='Correo electrónico' 
+                    style={styles.textInput} onChangeText={(value) => setEmail(value)}/>
+        <TextInput  placeholder='Contraseña' 
+                    style={styles.textInput} 
+                    secureTextEntry={true} onChangeText={(value) => setPassword(value)}/>
+        <TextInput  placeholder='Confirmar contraseña'
+                    style={styles.textInput} 
+                    secureTextEntry={true}  />
+        <TextInput  placeholder='Número celular' 
+                    style={styles.textInput} onChangeText={(value) => setPhone(value)} />
+  
+
+  <TouchableOpacity 
+    onPress={() => registerUser(userName, email, password, phone)}
+    style={styles.button}>
+        <Text style={styles.textButton}>Crear cuenta</Text>
+    </TouchableOpacity>
+       
+ 
+        
+        
+      </LinearGradient>
     )
 }
 
 export default CreateUsersScreen
+
+const styles = StyleSheet.create({
+
+  container: {
+    flex: 1,
+    backgroundColor: '#ffff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title:{
+    fontSize :40,
+    color:'#000', 
+    fontWeight: 'bold',
+    fontFamily: 'Bold'
+  },
+
+  textInput:{
+    padding: 10,
+    paddingStart: 30,
+    width: '80%',
+    height: 50,
+    marginTop: 20,
+    borderRadius: 30,
+    backgroundColor:'#fff',
+    marginTop: 20,
+    fontFamily: 'Bold'
+  },
+  logo:{
+    marginTop: 20,
+    width:'33%',
+    height: '15%'
+    
+  },
+  textButton :{
+    fontSize:18,
+    color:'#000000',
+    marginTop:10,
+    fontFamily: 'Bold'
+    } ,
+
+    button:{
+      marginTop:35,
+      width:'50%',
+      backgroundColor:'#1EBA82',
+      borderRadius:40,
+      padding:15,
+      borderWidth: 1.5,
+      alignItems:'center',
+      fontFamily: 'Bold'
+      },
+});

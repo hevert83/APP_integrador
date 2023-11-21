@@ -3,7 +3,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Notificaciones from "./Screens/Notifaciones";
 import HomeScreen from "./Screens/HomeScreen";
-import Maps from "./Screens/Maps";
+import Maps from "./Screens/MapScreen";
 import InfoReciclaje from "./Screens/InfoReciclaje";
 //import { SafeAreaView } from "react-native-safe-area-context";
 //import Header from "./Components/Header";

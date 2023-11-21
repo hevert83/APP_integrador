@@ -1,24 +1,27 @@
 import react from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient'
+import { WebView } from 'react-native-webview';
 
-export default function HomeScreen() {
+
+const MapScreen  = () => {
   
   return (
-    <LinearGradient style={styles.container}
-    colors={['#19AF79','#A4C1B7']}
-    start={{x:0 , y:0}}
-    end={{x:0, y:0.9}}
-    >
+   
 
-      <View>
-        <Text>Mapa</Text>
-      </View>
+    <WebView
+      source={{ uri: 'https://www.google.com.mx/maps/search/Mixquiahuala+de+Juárez,+Hgo.+centro+de+acopio/@20.2306671,-99.2408391,14z/data=!3m1!4b1?entry=ttu' }}
+      style={{ flex: 1 }} 
+    />
 
     
-      </LinearGradient>
+
+    
+    
   );
 }
+
+export default MapScreen
 
 const styles = StyleSheet.create({
   container: {

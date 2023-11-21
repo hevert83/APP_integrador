@@ -5,10 +5,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {firebase} from './database/firebase'
 
-
+//Navegacion de pantallas
 import Header from "./Components/Header";
 import CreateUsersScreen from "./Screens/CreateUsersScreen";
 import LoginScreen from "./Screens/LoginScreen";
+import ResetPasswordScreen from "./Screens/ResetPasswordScreen";
 
     const Stack = createNativeStackNavigator();
 
@@ -34,37 +35,48 @@ function App() {
         return(
            <Stack.Navigator>
 
-            <Stack.Screen
-                name="LoginScreen"
-                component={LoginScreen}
+            <Stack.Screen name=" " component={LoginScreen}
+             options={{
+                headerTitle: () => <Header name=" "/>,
+                    headerStyle: {
+                       // height: 150,
+                       // borderBottomLeftRadius:50,
+                       // borderBottomRightRadius:50,
+                       backgroundColor: '#19AF79',
+                       // elevation: 25
+                    }, 
+                  headerShown:false}}
+            />
+
+                <Stack.Screen
+                name="ResetPasswordScreen"
+                component={ResetPasswordScreen}
                 options={{
-                 headerTitle: () => <Header name="PruebaPantalla"/>,
+                headerTitle: () => <Header name="Login"/>,
                     headerStyle: {
                         height: 150,
                         borderBottomLeftRadius:50,
                         borderBottomRightRadius:50,
-                       // backgroundColor: '#000',
+                        backgroundColor: '#000',
                         elevation: 25
                     } 
-                  }}
-                  
+                  ,}}
                   
                />
 
-
-                <Stack.Screen
+               <Stack.Screen
                 name="CreateUsersScreen"
                 component={CreateUsersScreen}
                 options={{
-                headerTitle: () => <Header name="PruebaPantalla"/>,
+                headerTitle: () => <Header name="Login"/>,
                     headerStyle: {
-                        height: 150,
-                        borderBottomLeftRadius:50,
-                        borderBottomRightRadius:50,
+                        //height: 150,
+                        //borderBottomLeftRadius:50,
+                        //borderBottomRightRadius:50,
                        // backgroundColor: '#000',
-                        elevation: 25
+                        //elevation: 25
                     } 
-                  }}
+                  ,}}
                   
                />
             
