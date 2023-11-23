@@ -7,12 +7,12 @@ import 'firebase/compat/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCQSFUrhokClQWFq1rMkwMmPYsFaAkkl-w",
-  authDomain: "react-native-coneccion.firebaseapp.com",
-  projectId: "react-native-coneccion",
-  storageBucket: "react-native-coneccion.appspot.com",
-  messagingSenderId: "902778518881",
-  appId: "1:902778518881:web:42df90dd36b74c69b25920"
+  apiKey: "AIzaSyBmp5IRkir5f-0fzRftJQJ1DtOj1frLT1U",
+  authDomain: "eco-innovation.firebaseapp.com",
+  projectId: "eco-innovation",
+  storageBucket: "eco-innovation.appspot.com",
+  messagingSenderId: "472986923443",
+  appId: "1:472986923443:web:89585336a53dda99c2dbc6"
 };
 
 // Initialize Firebase

@@ -1,24 +1,24 @@
-import react from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient'
+import { View, Text,StyleSheet } from 'react-native'
+import React from 'react'
+import { LinearGradient } from 'expo-linear-gradient';
+import { WebView } from 'react-native-webview';
 
-export default function HomeScreen() {
-  
+
+
+
+
+
+const InfoReciclaje = () => {
   return (
-    <LinearGradient style={styles.container}
-    colors={['#19AF79','#A4C1B7']}
-    start={{x:0 , y:0}}
-    end={{x:0, y:0.9}}
-    >
-
-      <View>
-        <Text>Hola</Text>
-      </View>
-
-    
-      </LinearGradient>
+ 
+    <WebView
+    source={{ uri: 'https://www.recytrans.com/blog/que-es-el-reciclaje/' }}
+    style={{ flex: 1 }} 
+  />
   );
 }
+
+export default InfoReciclaje
 
 const styles = StyleSheet.create({
   container: {

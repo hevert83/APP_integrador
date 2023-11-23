@@ -1,6 +1,7 @@
-import { View, Text ,StyleSheet,TextInput,TouchableOpacity} from 'react-native'
+import { View, Text ,StyleSheet,TextInput,TouchableOpacity,Image} from 'react-native'
 import React,{useState, useEffect,}from 'react'
 import { firebase } from '../database/firebase'
+import { LinearGradient } from 'expo-linear-gradient'
 
 const ResetPasswordScreen = () => {
 
@@ -17,19 +18,30 @@ const ResetPasswordScreen = () => {
     }
     
   return (
-    <View style={styles.container}>
-    <Text style={styles.title}>Recupera tu constraseña</Text>
 
-    <Text style={styles.description}>
-      Podemos enviarte notificaciones por SMS o correo con fines de seguridad e inicio de sesión
-    </Text>
+    <LinearGradient style={styles.container}
+    colors={['#19AF79','#A4C1B7']}
+    start={{x:0 , y:0}}
+    end={{x:0, y:0.9}}>
 
-    <TextInput style={styles.inputs} placeholder="Correo electrónico" onChangeText={(value) => setEmail(value)}/>
+<Image source={require('../assets/logo.png')} style={styles.logo}></Image>
+      
+<Text style={styles.title}>Recupera tu constraseña</Text>
 
-    <TouchableOpacity onPress={() => changePassword(email)} style={styles.button}>
-      <Text style={styles.buttonText}>Enviar</Text>
-    </TouchableOpacity>
-  </View>
+<Text style={styles.description}>
+  Podemos enviarte notificaciones por correo con fines de seguridad e inicio de sesión
+</Text>
+
+<TextInput style={styles.inputs} placeholder="Correo electrónico" onChangeText={(value) => setEmail(value)}/>
+
+<TouchableOpacity onPress={() => changePassword(email)} style={styles.button}>
+  <Text style={styles.buttonText}>Enviar</Text>
+</TouchableOpacity>
+
+     
+
+      </LinearGradient>
+
   )
 }
 
@@ -56,11 +68,13 @@ const styles = StyleSheet.create({
       marginBottom: 20,
     },
     inputs: {
-      borderWidth: 1,
-      padding: 10,
+      borderWidth: 1.5,
+      padding: 15,
       width: '100%',
-      marginTop: 10,
+      marginTop: 0,
       borderRadius: 30,
+      backgroundColor: '#FFFFFF',
+      fontFamily: 'Bold'
     },
     button: {
       backgroundColor: '#00B894',
@@ -74,5 +88,11 @@ const styles = StyleSheet.create({
       fontSize: 16,
       fontWeight: 'bold',
       textAlign: 'center',
+    },
+    logo:{
+      marginTop: 0,
+      width:'30%',
+      height: '14%'
+      
     },
   });

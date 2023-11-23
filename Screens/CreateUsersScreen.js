@@ -13,6 +13,7 @@ const CreateUsersScreen = () => {
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
   const [phone,setPhone] =useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
 
   
   
@@ -25,40 +26,52 @@ const CreateUsersScreen = () => {
     return null;
   }
 
-  registerUser = async(userName, email, password, phone) => {
-    await firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        firebase.auth().currentUser.sendEmailVerification({
-          handleCodeInApp:true,
-          url:'https://react-native-coneccion.firebaseapp.com',
-        })
-        .then(() => {
-          alert('Email de verificación enviado')
-        })
-        .catch((error) => {
-          alert(error.message)
-        })
-        .then(() => {
-          const encryptedEmail = vigenereCipher(email);
-          const encryptedPassword = vigenereCipher(password);
-  
-          firebase.firestore().collection('users')
-            .doc(firebase.auth().currentUser.uid)
-            .set({
-              userName,
-              email: encryptedEmail, // Guardar el email cifrado en Firestore
-              password: encryptedPassword, // Guardar la contraseña cifrada en Firestore
-              phone
+  registerUser = async(userName, email, password, phone,confirmPassword) => {
+    const regex = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{6,10}$/;
+
+    if (regex.test(password)){
+      if (password == confirmPassword){
+        await firebase.auth().createUserWithEmailAndPassword(email, password)
+          .then(() => {
+            firebase.auth().currentUser.sendEmailVerification({
+              handleCodeInApp:true,
+              url:'https://eco-innovation.firebaseapp.com',
             })
-        })
-        .catch((error) => {
-          alert(error.message)
-        })
-      })
-      .catch((error => {
-        alert(error.message)
-      }))
-  }  
+            .then(() => {
+              alert('Email de verificación enviado')
+            })
+            .catch((error) => {
+              alert(error.message)
+            })
+            .then(() => {
+              const encryptedEmail = vigenereCipher(email);
+              const encryptedPassword = vigenereCipher(password);
+      
+              firebase.firestore().collection('users')
+                .doc(firebase.auth().currentUser.uid)
+                .set({
+                  userName,
+                  email: encryptedEmail, // Guardar el email cifrado en Firestore
+                  password: encryptedPassword, // Guardar la contraseña cifrada en Firestore
+                  phone
+                })
+            })
+            .catch((error) => {
+              alert(error.message)
+            })
+          })
+          .catch((error => {
+            alert(error.message)
+          }))
+        }else{
+          alert('Las contraseñas no coinciden')
+        } 
+    }else{
+      alert('Debes asignar una contraseña con combinaciones de números y letras y entre 6 y 10 caracteres')
+    }
+
+     
+}
 
     
     return (
@@ -80,13 +93,13 @@ const CreateUsersScreen = () => {
                     secureTextEntry={true} onChangeText={(value) => setPassword(value)}/>
         <TextInput  placeholder='Confirmar contraseña'
                     style={styles.textInput} 
-                    secureTextEntry={true}  />
+                    secureTextEntry={true}  onChangeText={(value) => setConfirmPassword(value)}/>
         <TextInput  placeholder='Número celular' 
                     style={styles.textInput} onChangeText={(value) => setPhone(value)} />
   
 
-  <TouchableOpacity 
-    onPress={() => registerUser(userName, email, password, phone)}
+    <TouchableOpacity 
+    onPress={() => registerUser(userName, email, password, phone, confirmPassword)}
     style={styles.button}>
         <Text style={styles.textButton}>Crear cuenta</Text>
     </TouchableOpacity>
@@ -128,12 +141,12 @@ const styles = StyleSheet.create({
   },
   logo:{
     marginTop: 20,
-    width:'33%',
+    width:'30%',
     height: '15%'
     
   },
   textButton :{
-    fontSize:18,
+    fontSize:13,
     color:'#000000',
     marginTop:10,
     fontFamily: 'Bold'

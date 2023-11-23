@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo/webpack-config": "^19.0.0",
     "@react-native-masked-view/masked-view": "0.2.9",
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/drawer": "^6.6.6",
@@ -24,6 +25,7 @@
     "expo-system-ui": "~2.4.0",
     "firebase": "^9.6.11",
     "react": "18.2.0",
+    "react-dom": "18.2.0",
     "react-native": "0.72.6",
     "react-native-gesture-handler": "~2.12.0",
     "react-native-pager-view": "6.2.0",
@@ -32,11 +34,10 @@
     "react-native-screens": "~3.22.0",
     "react-native-svg": "13.9.0",
     "react-native-tab-view": "^3.5.2",
-    "react-native-webview": "13.2.2",
-    "react-router-dom": "^6.19.0",
+    "react-native-vector-icons": "^10.0.2",
     "react-native-web": "~0.19.6",
-    "react-dom": "18.2.0",
-    "@expo/webpack-config": "^19.0.0"
+    "react-native-webview": "13.2.2",
+    "react-router-dom": "^6.19.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

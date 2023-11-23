@@ -33,19 +33,11 @@ function App() {
          
     if (!user) {
         return(
-           <Stack.Navigator>
-
+           <Stack.Navigator >
             <Stack.Screen name=" " component={LoginScreen}
              options={{
                 headerTitle: () => <Header name=" "/>,
-                    headerStyle: {
-                       // height: 150,
-                       // borderBottomLeftRadius:50,
-                       // borderBottomRightRadius:50,
-                       backgroundColor: '#19AF79',
-                       // elevation: 25
-                    }, 
-                  headerShown:false}}
+                    headerStyle: {}, headerShown:false}}
             />
 
                 <Stack.Screen
@@ -53,13 +45,13 @@ function App() {
                 component={ResetPasswordScreen}
                 options={{
                 headerTitle: () => <Header name="Login"/>,
-                    headerStyle: {
-                        height: 150,
-                        borderBottomLeftRadius:50,
-                        borderBottomRightRadius:50,
-                        backgroundColor: '#000',
-                        elevation: 25
-                    } 
+                headerStyle: {
+                    //height: 150,
+                    //borderBottomLeftRadius:50,
+                    //borderBottomRightRadius:50,
+                   // backgroundColor: '#000',
+                    //elevation: 25
+                } 
                   ,}}
                   
                />

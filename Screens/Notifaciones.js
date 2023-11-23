@@ -1,22 +1,25 @@
 import react from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient'
+import { WebView } from 'react-native-webview';
 
 export default function NotificacionesScreen() {
   
   return (
-    <LinearGradient style={styles.container}
-    colors={['#19AF79','#A4C1B7']}
-    start={{x:0 , y:0}}
-    end={{x:0, y:0.9}}
-    >
+    //<LinearGradient style={styles.container}
+    //colors={['#19AF79','#A4C1B7']}
+    //start={{x:0 , y:0}}
+    //end={{x:0, y:0.9}}
+    //>
+      <WebView
+      source={{ uri: 'https://www.eltiempo.com/noticias/reciclaje' }}
+      style={{ flex: 1 }} 
+    />
 
-      <View>
-        <Text>Hola</Text>
-      </View>
+     
 
     
-      </LinearGradient>
+      //</LinearGradient>
   );
 }
 

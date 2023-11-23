@@ -6,6 +6,7 @@ import { firebase } from '../database/firebase';
 import { useFonts } from 'expo-font';
 
 const LoginScreen = () => {
+  
   const navigation = useNavigation();
 
   const [email, setEmail] = useState('');
@@ -64,7 +65,7 @@ const LoginScreen = () => {
         onPress={() => navigation.navigate('ResetPasswordScreen')}
         style={styles.button}
       >
-        <Text style={styles.textButton}>¿Olvidaste tu contraseña?</Text>
+        <Text style={styles.textButtonpassword}>¿Olvidaste tu contraseña?</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -112,23 +113,31 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   textButton: {
-    fontSize: 18,
-    color: '#000000',
-    marginTop: 10,
+    fontSize:13,
+    color:'#000000',
+    marginTop:10,
     fontFamily: 'Bold'
   },
   button: {
+    fontSize:13,
     marginTop: 35,
     width: '50%',
     backgroundColor: '#1EBA82',
-    borderRadius: 40,
-    padding: 15,
-    borderWidth: 1.5,
+    borderRadius: 30,
+    padding: 10,
+    borderWidth: 1,
     alignItems: 'center',
+    textAlign:'justify'
   },
   logo: {
     marginTop: 20,
     width: '33%',
     height: '15%'
   },
+  textButtonpassword: {
+    fontSize:13,
+    color:'#000000',
+    marginTop:10,
+    fontFamily: 'Bold'
+  }
 });
